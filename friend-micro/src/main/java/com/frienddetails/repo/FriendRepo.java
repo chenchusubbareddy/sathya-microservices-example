@@ -11,7 +11,7 @@ public interface FriendRepo extends JpaRepository<Friend, Integer> {
 	
 	@Query(value="select count(*) from friend where phone_no=? and friend_n=?",nativeQuery = true)
 	Integer checkFriendContact(Long phoneNumber,Long friendNumber);
-	@Query(value="select fried_no from friend where phone_no=? ",nativeQuery = true)
+	@Query(value="select friend_number from friend where phone_number=? ",nativeQuery = true)
 	List<Long> findFriendsContactNumbers(Long phoneNumber);
 
 }

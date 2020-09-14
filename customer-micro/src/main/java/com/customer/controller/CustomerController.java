@@ -53,7 +53,7 @@ public class CustomerController {
 		return customerService.registerCustomer(registerDto);
 	}
 	
-	@GetMapping("/login")
+	@PostMapping("/login")
 	public boolean loginCustomer(@RequestBody LoginDTO logindto) {
 		return customerService.loginCustomer(logindto);
 		

@@ -46,20 +46,29 @@ public class UIController {
 	public   String   getIndexPage() {
 		return  "index";
 	}
-	
 	private List<PlanDTO>  getPlans() {
 		ParameterizedTypeReference<List<PlanDTO>>  typeRef=new  ParameterizedTypeReference<List<PlanDTO>>() {};
 		ResponseEntity<List<PlanDTO>>  re = restTemplate.exchange(ALLPLANS_URL, HttpMethod.GET, null, typeRef);
 		List<PlanDTO>   plansList = re.getBody();
 		return  plansList;
 	}
-	
+	@GetMapping("/plans")
+	private String getPlansforUI(HttpServletRequest request,Model  model) {
+		// this method written by chenchu the **
+		ParameterizedTypeReference<List<PlanDTO>>  typeRef=new  ParameterizedTypeReference<List<PlanDTO>>() {};
+		ResponseEntity<List<PlanDTO>>  re = restTemplate.exchange(ALLPLANS_URL, HttpMethod.GET, null, typeRef);
+		List<PlanDTO>   plansList = re.getBody();
+		System.out.println("palns list:"+plansList);
+		model.addAttribute("plansList",plansList);
+		model.addAttribute("msg","my msg");
+		request.getSession().setAttribute("plansList",plansList);
+		request.getSession().setAttribute("msg","my msg session");
+		return  "plans";
+	}
 	
 	@GetMapping("/registerPage")
 	public   String  getRegisterPage(Model  model) {
 		//call  Microservice-PlanDetails
-		
-		
 		RegisterBean   registerBean=new RegisterBean();
 		registerBean.setPlansList(getPlans());
 		model.addAttribute("registerBean", registerBean);
